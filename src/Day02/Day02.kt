@@ -11,11 +11,12 @@ val paper = 2 // B | Y
 val scissors = 3 // C | Z
 
 
+val results = mapOf("A X" to 4, "A Y" to 1, "A Z" to 7, "B X" to 8, "B Y" to 5, "B Z" to 2, "C X" to 3, "C Y" to 9, "C Z" to 6)
 
 fun main() {
 
     val testInput = readInput("Day02/Day02_test")
-    check(part1(testInput) == 15)
+//    check(part1(testInput) == 15)
 
     val input = readInput("Day02/Day02")
 
@@ -24,24 +25,32 @@ fun main() {
 }
 
 fun part1(input: List<String>): Int {
-    val line = "A Y"
-    val roundPicks = line.split(" ")
+    var totalScore = 0
+        input.forEach(){ round ->
+        totalScore += playNewMatch(round)
+//        val roundPicks = round.split(" ")
+//        playMatch(roundPicks[0], roundPicks[1])
+    }
+    return totalScore
+}
 
-    return playMatch(roundPicks[0], roundPicks[1])
+fun playNewMatch(round: String): Int {
+    return results[round]!!
 }
 
 fun playMatch(myPick: String, opponentPick: String): Int {
-    //Convert A/Y to Rock / Paper etc
     val myPickOption = getOptionFromCode(myPick)
     val opponentPickOption = getOptionFromCode(opponentPick)
+    val outcomeScore = if((myPickOption == Option.ROCK && opponentPickOption == Option.SCISSORS) || (myPickOption.weight > opponentPickOption.weight && !(myPickOption == Option.SCISSORS && opponentPickOption == Option.ROCK))){
+        6
+    } else if(myPickOption.weight == opponentPickOption.weight) {
+        3
+    } else {
+        0
+    }
 
-
-    // Find the winner
-
-    // Return score + choice
-
-
-    return 0
+    val totalScore = outcomeScore + myPickOption.weight
+    return totalScore
 }
 
 

@@ -2,11 +2,11 @@ package Day02
 
 import java.lang.RuntimeException
 
-enum class Option(val code: String, val secondCode: String) {
+enum class Option(val weight: Int, val code: String, val secondCode: String) {
 
-    ROCK("A", "X"),
-    PAPER("B", "Y"),
-    SCISSORS("C", "Z");
+    ROCK(1, "A", "X"),
+    PAPER(2, "B", "Y"),
+    SCISSORS(3, "C", "Z");
 
 }
 
