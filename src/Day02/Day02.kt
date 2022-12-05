@@ -6,6 +6,7 @@ fun main() {
 
     val testInput = readInput("Day02/Day02_test")
     check(part1(testInput) == 15)
+    check(part2(testInput) == 12)
 
     val input = readInput("Day02/Day02")
 
@@ -39,5 +40,30 @@ fun playMatch(opponentPick: String, myPick: String): Int {
 
 
 fun part2(input: List<String>): Int {
-    return 0
+    var totalScore = 0
+    input.forEach{ round ->
+        val roundPicks = round.split(" ")
+        val option = getOptionFromCode(roundPicks[0])
+        val optionToPlay: Option
+        if(roundPicks[1] == "X") { // Lose
+            val weight = option.weight - 1
+            optionToPlay = if(weight != 0) {
+                getOptionByWeight(weight)
+            } else {
+                Option.SCISSORS
+            }
+        } else if(roundPicks[1] == "Y") { //Draw
+            optionToPlay = getOptionByWeight(option.weight)
+        } else { // Win
+            val weight = option.weight + 1
+            optionToPlay = if(weight > 3) {
+                Option.ROCK
+            } else {
+                getOptionByWeight(weight)
+            }
+        }
+
+        totalScore += playMatch(roundPicks[0], optionToPlay.code)
+    }
+    return totalScore
 }

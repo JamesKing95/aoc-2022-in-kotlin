@@ -20,3 +20,12 @@ fun getOptionFromCode(code: String): Option {
     }
     throw RuntimeException("Unrecognised option code provided.")
 }
+
+fun getOptionByWeight(weight: Int): Option {
+    Option.values().forEach { option ->
+        if(option.weight == weight) {
+            return option
+        }
+    }
+    throw RuntimeException("Unrecognised option weight value provided.")
+}
